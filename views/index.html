@@ -2,28 +2,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Timestamp Microservice</title>
-    <meta name="description" content="A timestamp microservice">
+    <title>File Metadata Microservice</title>
+    <meta name="description" content="A file metadata microservice">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/main-style.css">
+    <script src="client.js"></script>
   </head>
   <body>
     <header>
       <h1>
-        Timestamp Microservice
+        File Metadata Microservice
       </h1>
     </header>
 
     <main>      
-      <p>Returns a JSON object with unix epoch time and raw time. It works if you pass either unix time or a date string.</p>
-      <h2 id="usage">Usage</h2>
-      <p>Pass a date string or unix time as a parameter in the url. Passing an invalid string or unix time will return a JSON object with null values.</p>
-      <h3 id="example">Example</h3>
-      <p>https://timestamp-ms.herokuapp.com/December%2015,%202015<br/>https://timestamp-ms.herokuapp.com/1450137600</p>
-      <p>Output:</p>
-      <p><code>{ "unix": 1450137600, "natural": "December 15, 2015" }</code></p>
+      <form id="fileform" enctype="multipart/form-data">
+        <input class="file-input" type="file" name="file" required/>
+        <input class="submit-input" type="submit" value="Get size" />
+      </form>
+      <div id="output">
+      </div>
     </main>
 
     <footer>
