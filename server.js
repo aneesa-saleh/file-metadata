@@ -5,33 +5,27 @@ var app = express();
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 
-// we've started you off with Express, 
-// but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
-// http://expressjs.com/en/starter/static-files.html
+// set 'public' folder to send static files
 app.use(express.static('public'));
 
-// http://expressjs.com/en/starter/basic-routing.html
+// home page
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
 
+//respond to file size query
 app.post('/filesize', upload.single('file'), function (request, response, next) {
-  // req.file is the `avatar` file
-  // req.body will hold the text fields, if there were any
-  console.log("got a file");
+  //add commas to file size
   var size = request.file.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   var resJSON = {
-    "File name": request.file.originalname, 
-    "Size": size + " bytes"
+    //"File name": request.file.originalname,
+    "File size": size + " bytes"
   };
   console.log(resJSON);
-  response.header("Access-Control-Allow-Origin", "*");
-  response.header("Access-Control-Allow-Headers", "X-Requested-With"); 
-  //response.redirect("https://google.com");
-  response.status(200).json({status:"ok"})
+  response.setHeader('Content-Type', 'application/json');
+  response.json(resJSON);
 });
-
 
 //handle 404 (page not found)
 app.get('*', function(request, response){

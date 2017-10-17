@@ -1,17 +1,42 @@
-//ref: https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
-window.onload = function() {
-  var form = document.getElementById("fileform");
-  form.addEventListener('submit', function(e) {
-    console.log("submitting form");
+  function init(){
+    $('#submit').click(submitButtonHandler);
+  }
 
-    var output = document.querySelector("#output"),
-        formData = new FormData(form);
+  function submitButtonHandler (e) {
+     var form = document.getElementById('fileform');
 
-    var request = new XMLHttpRequest();
-    request.open("POST", "/filesize", true);
-    
-    request.send(formData);
-    e.preventDefault();
-  }, false);
-};
+      //prevent form submission
+      e.preventDefault();
+      e.stopPropagation();
+
+      $('#output p').fadeOut();
+      //$('#output').css('display', 'inline-block');
+
+      var formData = new FormData(form);
+      //make the AJAX call
+      $.ajax({
+        url: '/filesize',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: postSuccessHandler
+      });
+  }
+
+  function postSuccessHandler (jsonData) {
+    var $data = $('#output p');
+
+    //update the UI with the data returned from the AJAX call 
+    $.each(jsonData, function (key, val) {
+      $data.text(JSON.stringify(jsonData));
+    });
+
+    $('#output').fadeIn();
+    $data.fadeIn();
+
+  };
+
+//init on document ready
+$(document).ready(init);
 
