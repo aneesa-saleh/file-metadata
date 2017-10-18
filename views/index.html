@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>File Metadata Microservice</title>
+    <meta name="description" content="A file metadata microservice">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/main-style.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="client.js"></script>
+    
+  </head>
+  <body>
+    <header>
+      <h1>
+        File Metadata Microservice
+      </h1>
+    </header>
+
+    <main>      
+      <form id="fileform" enctype="multipart/form-data" method="POST">
+        <input id="file-input" type="file" name="file" required/>
+        <input id="submit" class="submit-input" type="submit" value="Get file size" />
+      </form>
+      <p id="loading">Loading ...</p>
+      <div id="output">
+        <div id="output-inner">
+          <p></p>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+    </footer>
+
+  </body>
+</html>
