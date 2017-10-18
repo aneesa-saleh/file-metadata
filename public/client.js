@@ -1,18 +1,26 @@
   function init(){
     $('#submit').click(submitButtonHandler);
+    
+    //disable button initially (no file selected)
+    $('#submit').prop('disabled', true);
+    
+    //when a change happends on form i.e. file selector opened
+    $('#fileform').change(function() {
+        //disable submit button if file input value is empty
+        $('#submit').prop('disabled', $('#file-input').val().toString() == "");
+    });
   }
 
   function submitButtonHandler (e) {
      var form = document.getElementById('fileform');
+     var formData = new FormData(form);
 
-      //prevent form submission
+      //prevent default form action
       e.preventDefault();
       e.stopPropagation();
 
-      $('#output p').fadeOut();
-      //$('#output').css('display', 'inline-block');
+      $('#loading').css("visibility","visible");
 
-      var formData = new FormData(form);
       //make the AJAX call
       $.ajax({
         url: '/filesize',
@@ -28,12 +36,12 @@
     var $data = $('#output p');
 
     //update the UI with the data returned from the AJAX call 
-    $.each(jsonData, function (key, val) {
-      $data.text(JSON.stringify(jsonData));
-    });
+      var displayJSON = '{<br/>&nbsp;"File" : "' + jsonData.name + '",<br/>&nbsp;"Size" : "' + jsonData.size + '"<br/>}'
+      $data.html(displayJSON + ($data.html() ? '<br/>' + $data.html() : ''));
 
-    $('#output').fadeIn();
-    $data.fadeIn();
+
+    $('#output').fadeIn(1000);
+    $('#loading').css("visibility","hidden");
 
   };
 

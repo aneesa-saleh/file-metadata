@@ -7,5 +7,5 @@ Returns a JSON object with size of the file selected.
 
 ### Sample Output:
 
-`{ "File name": "test.js", "Size": "70 bytes" }`
+`{ "File": "test.js", "Size": "70 bytes" }`
 

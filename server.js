@@ -2,8 +2,9 @@
 // init project
 var express = require('express');
 var app = express();
-var multer  = require('multer')
-var upload = multer({ dest: 'uploads/' })
+var multer  = require('multer');
+var storage = multer.memoryStorage();
+var upload = multer({ storage: storage });
 
 
 // set 'public' folder to send static files
@@ -18,9 +19,10 @@ app.get("/", function (request, response) {
 app.post('/filesize', upload.single('file'), function (request, response, next) {
   //add commas to file size
   var size = request.file.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  var name =  request.file.originalname;
   var resJSON = {
-    //"File name": request.file.originalname,
-    "File size": size + " bytes"
+    name : request.file.originalname,
+    size : size + " bytes"
   };
   console.log(resJSON);
   response.setHeader('Content-Type', 'application/json');
